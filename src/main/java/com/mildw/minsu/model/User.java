@@ -1,4 +1,4 @@
-package com.mildw.minsu.persistence.model;
+package com.mildw.minsu.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,15 +13,12 @@ import javax.persistence.Id;
 @Getter @Setter
 @NoArgsConstructor
 @ToString
-public class UserEntity {
-
+public class User {
     @Id
     @GeneratedValue
     private Long id;
     private String name;
-
-    public UserEntity(String name){
+    public User(String name){
         this.name = name;
     }
-
-}
+ }

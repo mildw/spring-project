@@ -1,4 +1,4 @@
-package com.mildw.minsu;
+package com.mildw.minsu.nothing;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.StringHttpMessageConverter;
