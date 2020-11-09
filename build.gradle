@@ -1,6 +1,11 @@
 plugins {
 	id 'org.springframework.boot' version '2.3.5.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	
+	// 이건뭐지
+	// id "org.asciidoctor.convert" version '1.5.9.2'
+	// id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
+
 	id 'java'
 	id 'war'
 }
@@ -16,11 +21,14 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 
 	// JPA
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	//H2 DB
+	// H2 DB
 	compile 'com.h2database:h2'
+	// mysql
+	implementation 'mysql:mysql-connector-java:5.1.31'
 
 	// Lombok
 	compileOnly 'org.projectlombok:lombok:1.18.16'
@@ -31,6 +39,9 @@ dependencies {
 	// Jsoup
 	compile 'org.jsoup:jsoup:1.13.1'
 
+	// CORS test파일 시 필요
+	testImplementation 'org.apache.httpcomponents:httpclient'
+	
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}

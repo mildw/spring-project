@@ -14,11 +14,15 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @ToString
 public class User {
+
     @Id
     @GeneratedValue
     private Long id;
     private String name;
+
     public User(String name){
         this.name = name;
+
     }
- }
+
+}
