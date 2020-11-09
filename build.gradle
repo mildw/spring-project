@@ -19,9 +19,13 @@ repositories {
 }
 
 dependencies {
+	// 아직도 차이점모름 ㅋㅋ
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+
+	// security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 
 	// JPA
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

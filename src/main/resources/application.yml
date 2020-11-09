@@ -1,7 +1,24 @@
 server:
   port: 8080
+  servlet:
+    context-path: /resource-server
+
 spring:
   jpa:
     hibernate:
       ddl-auto: create
     database-platform: org.hibernate.dialect.H2Dialect
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8083/auth/realms/baeldung
+          jwk-set-uri: http://localhost:8083/auth/realms/baeldung/protocol/openid-connect/certs
+
+security:
+  jwt:
+    token:
+      secret-key: test
+      expire-length: 4
+
+

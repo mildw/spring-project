@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter @Setter
 public class JwtAuthRq {
 
-    private String UserId;
-    private String UserPasswd;
+    private String UserEmail;
+    private String UserPassWord;
 
 }
