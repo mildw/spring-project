@@ -3,20 +3,19 @@ package com.mildw.minsu.service;
 import com.mildw.minsu.controller.jwtAuth.rqrs.JwtAuthRq;
 import com.mildw.minsu.dao.UserRepository;
 import com.mildw.minsu.model.User;
+import com.mildw.minsu.util.JwtTokenProvider;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
-
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final JwtTokenProvider jwtTokenProvider; // 이렇게쓰는거 아닌거같은데
 
     public Optional<User> findByEmail(Long id){
         return userRepository.findById(id);
@@ -38,6 +37,6 @@ public class UserService {
             throw new NullPointerException(); // 여기도 문구 넣어줘야하지않나
         }
 
-        return jwtTokenProvider.createToken(loginRequest.getEmail()); // email 정보만 가지고 token을 만든다.
+        return jwtTokenProvider.createToken(jwtAuthRq.getUserEmail()); // email 정보만 가지고 token을 만든다.
     }
 }
