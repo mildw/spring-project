@@ -8,16 +8,18 @@ import javax.persistence.Id;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @ToString
+@RequiredArgsConstructor
 public class User {
 
     @Id
     @GeneratedValue
     private Long id;
+    @NonNull
     private String email;
+    @NonNull
     private String password;
+    @NonNull
     private String name;
 
 }
