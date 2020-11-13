@@ -1,33 +1,36 @@
 package com.mildw.minsu.util;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import java.security.Key;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import javax.xml.bind.DatatypeConverter;
 
 @Component
 public class JwtTokenProvider {
 
-    @Value("${security.jwt.token.secret-key}")
-    private String secretKey;
-    @Value("${security.jwt.token.expire-length}")
-    private long validityInMilliseconds;
-
     public String createJwtToken(String subject) {
-        Claims claims = Jwts.claims().setSubject(subject);
+        Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+        String jws = Jwts.builder().setSubject(subject).signWith(key).compact();
+        return jws;
+    }
 
-        Date now = new Date();
-        Date validity = new Date(now.getTime()
-                + validityInMilliseconds);
+    public Claims decodeJWT(String jwt) {
+        try {
+            Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+            Jws<Claims> jws = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt);
+            jws.getSignature();
 
-        return Jwts.builder()
-                .setClaims(claims)
-                .setIssuedAt(now)
-                .setExpiration(validity)
-                .signWith(SignatureAlgorithm.HS256, secretKey)
-                .compact();
+            //OK, we can trust this JWT
+
+        } catch (Exception e) {
+
+            //don't trust the JWT!
+        }
     }
 }

@@ -32,7 +32,9 @@ public class MinsuApplication extends SpringBootServletInitializer {
 
 			for (User user : repository.findAll()) {
 				System.out.println(user.toString());
+				String token = userService.createToken(new JwtAuthRq("alstn428@naver.com", "1233ee"));
 				System.out.println(userService.createToken(new JwtAuthRq("alstn428@naver.com", "1233ee")));
+				System.out.println(userService.validateToken(token));
 			}
 
 
