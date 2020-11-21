@@ -1,48 +1,47 @@
 package com.mildw.minsu;
 
-import com.mildw.minsu.controller.jwtAuth.rqrs.JwtAuthRq;
-import com.mildw.minsu.dao.UserRepository;
-import com.mildw.minsu.model.User;
-import com.mildw.minsu.service.UserService;
-import lombok.RequiredArgsConstructor;
+import com.mildw.minsu.dao.AccountRepository;
+import com.mildw.minsu.model.Account;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.mildw.minsu.config", "com.mildw"})
-@RequiredArgsConstructor
 public class MinsuApplication extends SpringBootServletInitializer {
 
-	private final UserService userService;
-
+	@Autowired
+	public PasswordEncoder passwordEncoder;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MinsuApplication.class, args);
 		}
 
 	@Bean
-	public CommandLineRunner demo(UserRepository repository) {
+	public CommandLineRunner demo(AccountRepository repository) {
 		return (args) -> {
 			// save a few customers
-			repository.save(new User("alstn428@naver.com", "1233ee","minsu"));
+			Account account = new Account();
+			account.setUsername("kms0428");
+			account.setPassword(passwordEncoder.encode("1233"));
+			account.setName("minsu");
+			repository.save(account);
 
-			for (User user : repository.findAll()) {
+			for (Account user : repository.findAll()) {
 				System.out.println(user.toString());
-				String token = userService.createToken(new JwtAuthRq("alstn428@naver.com", "1233ee"));
-				System.out.println(userService.createToken(new JwtAuthRq("alstn428@naver.com", "1233ee")));
-				System.out.println(userService.validateToken(token));
 			}
 
 
 			// fetch an individual customer by ID
-			User userEntity = repository.findById(1L).orElseGet(null);
+			Account accountEntity = repository.findById(1L).orElseGet(null);
 			System.out.println("Customer found with findById(1L):");
 			System.out.println("--------------------------------");
-			System.out.println(userEntity.toString());
+			System.out.println(accountEntity.toString());
 			System.out.println("");
 		};
 	}

@@ -11,13 +11,13 @@ import javax.persistence.Id;
 @ToString
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class User {
+public class Account {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private Long sn;
     @NonNull
-    private String email;
+    private String username;
     @NonNull
     private String password;
     @NonNull
