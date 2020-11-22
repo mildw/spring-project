@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
@@ -54,6 +55,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .passwordParameter("password")
                         .defaultSuccessUrl("/admin/index")
                         .successHandler(authenticationSuccessHandler())
+                        .failureHandler(authenticationFailureHandler())
+
+        ;
                 ;
 
         http.csrf().disable()
@@ -78,6 +82,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthenticationSuccessHandler authenticationSuccessHandler() {
         return new MinsuAuthenticationSuccessHandler();
+    }
+
+    @Bean
+    public AuthenticationFailureHandler authenticationFailureHandler() {
+        return new MinsuAuthenticationFailureHandler();
     }
 
     @Bean
